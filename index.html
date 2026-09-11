@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4f1eb" />
+  <title>Vancouver First PR Landing · 2026.09.24</title>
+  <style>
+    :root{
+      --bg:#f4f1eb; --card:#fbfaf7; --ink:#2e312f; --muted:#73766f;
+      --line:#dedbd3; --accent:#6f8176; --soft:#e9eee9;
+      --warn:#f2e8dd; --ok:#667a69; --shadow:0 12px 30px rgba(56,60,56,.08);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.65}
+    .wrap{max-width:880px;margin:0 auto;padding:18px 16px 72px}
+    .hero{padding:28px 22px 20px;border-radius:28px;background:linear-gradient(145deg,#f9f7f2,#e8eee9);box-shadow:var(--shadow);margin:10px 0 16px}
+    .eyebrow{font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:700;text-transform:uppercase}
+    h1{font-size:31px;line-height:1.2;margin:8px 0 8px}
+    .sub{color:var(--muted);margin:0 0 20px}
+    .progress-row{display:flex;align-items:center;gap:14px}
+    .progress{height:10px;background:#dfe2dc;border-radius:999px;overflow:hidden;flex:1}
+    .bar{height:100%;width:0;background:var(--accent);transition:.25s}
+    .pct{font-size:14px;font-weight:700;min-width:46px;text-align:right}
+    .nav{display:flex;gap:8px;overflow:auto;padding:8px 0 10px;margin-bottom:6px;position:sticky;top:0;background:rgba(244,241,235,.92);backdrop-filter:blur(12px);z-index:20}
+    .nav a{white-space:nowrap;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:14px}
+    section{margin:18px 0}
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 2px 10px}
+    h2{font-size:22px;margin:0}
+    .hint{font-size:13px;color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 5px 18px rgba(50,50,50,.035);padding:16px;margin:10px 0}
+    .check{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:flex-start;padding:11px 2px;border-bottom:1px dashed var(--line)}
+    .check:last-child{border-bottom:none}
+    input[type=checkbox]{width:21px;height:21px;margin-top:2px;accent-color:var(--accent)}
+    .check strong{display:block}
+    .small{font-size:13px;color:var(--muted);margin-top:2px}
+    .badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:700;background:var(--soft);color:var(--ok);margin-left:4px}
+    .badge.warn{background:var(--warn);color:#8a654b}
+    .timeline{counter-reset:step}
+    details.step{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:10px 0;overflow:hidden}
+    details.step summary{list-style:none;cursor:pointer;padding:15px 16px;font-weight:750;display:flex;align-items:center;gap:11px}
+    details.step summary::-webkit-details-marker{display:none}
+    details.step summary:before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:var(--soft);color:var(--ok);font-size:14px;flex:0 0 auto}
+    details.step[open]{box-shadow:var(--shadow)}
+    .step-body{padding:0 17px 17px 59px;color:#444844}
+    .say{background:#f0f3ef;border-left:4px solid var(--accent);padding:12px 13px;border-radius:0 12px 12px 0;margin:10px 0;font-size:15px}
+    .copy{border:0;background:#dde7df;color:#425247;border-radius:10px;padding:6px 9px;font-size:12px;cursor:pointer;margin-left:7px}
+    .addressbox textarea{width:100%;min-height:88px;border:1px solid var(--line);border-radius:14px;padding:12px;background:white;font:inherit;resize:vertical}
+    .alert{background:var(--warn);border:1px solid #e6d5c6;border-radius:16px;padding:13px 14px;margin:10px 0}
+    .okbox{background:#e8eee8;border:1px solid #d4dfd5;border-radius:16px;padding:13px 14px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mini{padding:14px;border-radius:16px;background:#f7f5f0;border:1px solid var(--line)}
+    .mini b{display:block;margin-bottom:4px}
+    .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    button.action{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 12px;cursor:pointer;color:var(--ink)}
+    button.action.primary{background:var(--accent);color:white;border-color:var(--accent)}
+    .footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+    .strike-when-checked:has(input:checked) .txt{opacity:.55;text-decoration:line-through}
+    @media(max-width:620px){
+      h1{font-size:27px}.wrap{padding-left:12px;padding-right:12px}.hero{padding:24px 18px 18px}
+      .grid2{grid-template-columns:1fr}.step-body{padding-left:17px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Vancouver · First PR Landing</div>
+      <h1>9月24日 · 温哥华首次 PR 登陆</h1>
+      <p class="sub">夫妻版交互清单｜机场流程、SIN、现场英语和 Plan B 都放在这一页。</p>
+      <div class="progress-row">
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <div class="pct" id="pct">0%</div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <a href="#before">出发前</a>
+      <a href="#airport">YVR流程</a>
+      <a href="#sin">SIN</a>
+      <a href="#after">登陆后</a>
+      <a href="#english">现场英语</a>
+    </nav>
+
+    <section id="before">
+      <div class="section-title"><h2>出发前检查</h2><span class="hint">建议两个人各一套文件</span></div>
+      <div class="card">
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="passport"><span class="txt"><strong>护照原件 × 2</strong><span class="small">不要托运，夫妻各自随身携带。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="copr"><span class="txt"><strong>COPR 原件 × 2</strong><span class="small">不要提前乱签字，按现场 officer 指示操作。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="addressprint"><span class="txt"><strong>PR Card 加拿大收件地址打印件 × 2</strong><span class="small">建议大字打印，包含门牌号 / Unit、街道、城市、省、邮编。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="arrivecan"><span class="txt"><strong>ArriveCAN Advance Declaration</strong> <span class="badge warn">可选</span><span class="small">可在抵达前 72 小时内填；没填也可以到 YVR 自助机现场申报。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="backup"><span class="txt"><strong>重要文件手机/云端备份</strong><span class="small">护照资料页、COPR、机票、加拿大地址。</span></span></label>
+      </div>
+
+      <div class="card addressbox">
+        <strong>PR Card 收件地址</strong>
+        <p class="small">可以先存在这里，现场直接给 officer 看。内容只保存在你当前浏览器，不会上传到 GitHub。</p>
+        <textarea id="address" placeholder="例如：Unit 1234, 567 W 8th Ave, Vancouver, BC, V6X 1Y2"></textarea>
+      </div>
+
+      <div class="alert">
+        <strong>这次不用默认准备 BSF186 / BSF186A。</strong><br>
+        你们是短登、目前没有要把家具等大批个人物品运进加拿大，不要因为别人攻略里有就硬填。未来真要搬家再单独规划 Goods to Follow。
+      </div>
+    </section>
+
+    <section id="airport">
+      <div class="section-title"><h2>YVR 到达后怎么走</h2><span class="hint">点每一步展开</span></div>
+      <div class="timeline">
+        <details class="step" open>
+          <summary>下飞机后跟着 Arrivals / Immigration 走</summary>
+          <div class="step-body">不用自己找“PR Landing 柜台”。正常跟着人流和 <b>Arrivals / Immigration / Canada Border Services</b> 指示牌走即可。</div>
+        </details>
+        <details class="step">
+          <summary>在 CBSA 自助机器完成入境申报</summary>
+          <div class="step-body">扫描护照并完成海关申报。如果你已经用 ArriveCAN 填了 Advance Declaration，就在机器上调出并确认；没填也可以现场回答。</div>
+        </details>
+        <details class="step">
+          <summary>告诉工作人员：这是第一次 PR Landing</summary>
+          <div class="step-body">
+            到 CBSA officer 处时，把护照和 COPR 拿出来。
+            <div class="say">“This is our first PR landing.” <button class="copy" data-copy="This is our first PR landing.">复制</button></div>
+            工作人员一般会引导你们去 Immigration / Secondary Immigration 区域。
+          </div>
+        </details>
+        <details class="step">
+          <summary>Immigration Office：完成正式 Landing</summary>
+          <div class="step-body">取号、等待叫号，然后把 <b>护照 + COPR</b> 给 officer。通常会确认婚姻/家庭情况、是否有重大变化、资料是否正确等。听什么如实答什么即可。</div>
+        </details>
+        <details class="step">
+          <summary>把 PR Card 收件地址给 officer</summary>
+          <div class="step-body">
+            直接递打印件最省事。
+            <div class="say">“This is our Canadian mailing address for our PR cards.” <button class="copy" data-copy="This is our Canadian mailing address for our PR cards.">复制</button></div>
+          </div>
+        </details>
+        <details class="step">
+          <summary>离开柜台前检查 COPR</summary>
+          <div class="step-body">重点看：<b>姓名、出生日期、Landing 日期、officer 完成的签署/确认</b>。Landing 日期应该是你们实际完成登陆的日期：<b>2026-09-24</b>。</div>
+        </details>
+        <details class="step">
+          <summary>去 YVR SIN@Landing 办 SIN</summary>
+          <div class="step-body">你已经确认 9 月 24 日（周四）YVR 的 SIN@Landing 开放。带刚完成 Landing 的 <b>COPR + 护照</b> 去办，两个人分别申请自己的 SIN。</div>
+        </details>
+        <details class="step">
+          <summary>取行李 / 海关 / 离开机场</summary>
+          <div class="step-body">Landing 和 SIN 都办完后，再按机场指示完成后续取行李和海关流程。出机场前再次确认护照、COPR 都在自己手里。</div>
+        </details>
+      </div>
+    </section>
+
+    <section id="sin">
+      <div class="section-title"><h2>SIN 办理</h2><span class="hint">机场优先，DT 备选</span></div>
+      <div class="grid2">
+        <div class="mini">
+          <b>Plan A · YVR</b>
+          <span>9/24 当天 SIN@Landing 开放。Landing 完成后直接办理。</span>
+          <div class="small">每人：COPR + 护照</div>
+        </div>
+        <div class="mini">
+          <b>Plan B · Downtown</b>
+          <span>Vancouver Service Canada Centre</span>
+          <div class="small">200 – 978 Granville Street, Vancouver, BC V6Z 1L2</div>
+          <div class="small">周一至周五 8:30–16:00</div>
+        </div>
+      </div>
+      <div class="say">“Where is the Service Canada SIN@Landing counter?” <button class="copy" data-copy="Where is the Service Canada SIN@Landing counter?">复制</button></div>
+      <div class="alert"><strong>SIN 是敏感个人信息。</strong>办好以后不要把完整 SIN 随便截图、发朋友圈或交给无关人员。</div>
+    </section>
+
+    <section id="after">
+      <div class="section-title"><h2>登陆后</h2><span class="hint">当晚就能做完</span></div>
+      <div class="card">
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="coprsafe"><span class="txt"><strong>COPR 原件单独收好</strong><span class="small">即使以后拿到 PR Card 也不要扔。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="coprscan"><span class="txt"><strong>扫描/拍照 COPR 并云端备份</strong></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="entrylog"><span class="txt"><strong>记录 2026-09-24 为本次入境日期</strong><span class="small">以后每次进出加拿大都继续记录，便于计算 PR 居住义务。</span></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="bank"><span class="txt"><strong>银行账户</strong> <span class="badge">可选</span><span class="small">不是首次登陆必须办，有需要再开。</span></span></label>
+      </div>
+      <div class="okbox"><strong>这次不急着办：</strong>BC 驾照、MSP 医保。你们短登后还要回国生活，不需要为了第一次登陆一次性把所有生活手续办齐。</div>
+    </section>
+
+    <section id="english">
+      <div class="section-title"><h2>现场英语速查</h2><span class="hint">需要时直接点复制</span></div>
+      <div class="card">
+        <div class="say">This is our first PR landing. <button class="copy" data-copy="This is our first PR landing.">复制</button></div>
+        <div class="say">This is our Canadian mailing address for our PR cards. <button class="copy" data-copy="This is our Canadian mailing address for our PR cards.">复制</button></div>
+        <div class="say">Could you please confirm that our mailing address has been entered for the PR cards? <button class="copy" data-copy="Could you please confirm that our mailing address has been entered for the PR cards?">复制</button></div>
+        <div class="say">Where is the Service Canada SIN@Landing counter? <button class="copy" data-copy="Where is the Service Canada SIN@Landing counter?">复制</button></div>
+        <div class="say">Could I check the completed COPR before I leave? <button class="copy" data-copy="Could I check the completed COPR before I leave?">复制</button></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title"><h2>离开机场前 30 秒复核</h2></div>
+      <div class="card">
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="final1"><span class="txt"><strong>两人的 COPR 都已完成 Landing</strong></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="final2"><span class="txt"><strong>PR Card 收件地址已提供</strong></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="final3"><span class="txt"><strong>COPR 信息和日期检查无误</strong></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="final4"><span class="txt"><strong>SIN 已办好；若未办，知道 Plan B</strong></span></label>
+        <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="final5"><span class="txt"><strong>护照 + COPR 都在自己手里</strong></span></label>
+      </div>
+      <div class="btnrow">
+        <button class="action primary" id="allDone">全部标记完成</button>
+        <button class="action" id="reset">重置清单</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      本页按 2026-09-11 的流程信息整理，临行前如官方规则有更新，以 IRCC / CBSA / Service Canada 为准。<br>
+      勾选状态和地址仅保存在当前设备浏览器，不会上传到网站服务器。
+    </footer>
+  </main>
+
+<script>
+  const tasks=[...document.querySelectorAll('.task')];
+  const bar=document.getElementById('bar'), pct=document.getElementById('pct');
+  const key='yvr-pr-landing-2026';
+  const saved=JSON.parse(localStorage.getItem(key)||'{}');
+
+  tasks.forEach(cb=>{
+    cb.checked=!!saved[cb.dataset.id];
+    cb.addEventListener('change',()=>{
+      saved[cb.dataset.id]=cb.checked;
+      localStorage.setItem(key,JSON.stringify(saved));
+      updateProgress();
+    });
+  });
+
+  function updateProgress(){
+    const n=tasks.filter(x=>x.checked).length;
+    const p=Math.round(n/tasks.length*100);
+    bar.style.width=p+'%'; pct.textContent=p+'%';
+  }
+  updateProgress();
+
+  const address=document.getElementById('address');
+  address.value=localStorage.getItem('yvr-pr-address')||'';
+  address.addEventListener('input',()=>localStorage.setItem('yvr-pr-address',address.value));
+
+  document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
+    try{
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      const old=btn.textContent; btn.textContent='已复制 ✓';
+      setTimeout(()=>btn.textContent=old,1200);
+    }catch(e){ alert('复制失败，请长按文字复制。'); }
+  }));
+
+  document.getElementById('reset').addEventListener('click',()=>{
+    if(confirm('确定要清空所有勾选状态吗？')){
+      tasks.forEach(x=>x.checked=false);
+      Object.keys(saved).forEach(k=>delete saved[k]);
+      localStorage.setItem(key,'{}');
+      updateProgress();
+    }
+  });
+
+  document.getElementById('allDone').addEventListener('click',()=>{
+    tasks.forEach(x=>{x.checked=true;saved[x.dataset.id]=true;});
+    localStorage.setItem(key,JSON.stringify(saved)); updateProgress();
+  });
+</script>
+</body>
+</html>

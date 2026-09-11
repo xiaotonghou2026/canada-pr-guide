@@ -53,6 +53,9 @@
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .mini{padding:14px;border-radius:16px;background:#f7f5f0;border:1px solid var(--line)}
     .mini b{display:block;margin-bottom:4px}
+    .maplink{color:var(--ok);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(102,122,105,.35)}
+    .maplink:hover{border-bottom-color:var(--ok)}
+    .mapbtn{margin-top:9px;border:1px solid var(--line);background:#eef2ed;color:#425247;border-radius:10px;padding:8px 10px;font-size:13px;cursor:pointer}
     .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
     button.action{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 12px;cursor:pointer;color:var(--ink)}
     button.action.primary{background:var(--accent);color:white;border-color:var(--accent)}
@@ -69,7 +72,7 @@
     <header class="hero">
       <div class="eyebrow">Vancouver · First PR Landing</div>
       <h1>9月24日 · 温哥华首次 PR 登陆</h1>
-      <p class="sub">夫妻版交互清单｜机场流程、SIN、现场英语和 Plan B 都放在这一页。</p>
+      <p class="sub">夫妻版交互清单｜机场流程、SIN 和 Plan B 都放在这一页。</p>
       <div class="progress-row">
         <div class="progress"><div class="bar" id="bar"></div></div>
         <div class="pct" id="pct">0%</div>
@@ -81,7 +84,6 @@
       <a href="#airport">YVR流程</a>
       <a href="#sin">SIN</a>
       <a href="#after">登陆后</a>
-      <a href="#english">现场英语</a>
     </nav>
 
     <section id="before">
@@ -98,6 +100,7 @@
         <strong>PR Card 收件地址</strong>
         <p class="small">可以先存在这里，现场直接给 officer 看。内容只保存在你当前浏览器，不会上传到 GitHub。</p>
         <textarea id="address" placeholder="例如：Unit 1234, 567 W 8th Ave, Vancouver, BC, V6X 1Y2"></textarea>
+        <button class="mapbtn" id="openAddressMap" type="button">在 Google Maps 打开这个地址 ↗</button>
       </div>
 
       <div class="alert">
@@ -162,7 +165,7 @@
         <div class="mini">
           <b>Plan B · Downtown</b>
           <span>Vancouver Service Canada Centre</span>
-          <div class="small">200 – 978 Granville Street, Vancouver, BC V6Z 1L2</div>
+          <div class="small"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=200%20-%20978%20Granville%20Street%2C%20Vancouver%2C%20BC%20V6Z%201L2" target="_blank" rel="noopener">200 – 978 Granville Street, Vancouver, BC V6Z 1L2 ↗</a></div>
           <div class="small">周一至周五 8:30–16:00</div>
         </div>
       </div>
@@ -179,17 +182,6 @@
         <label class="check strike-when-checked"><input class="task" type="checkbox" data-id="bank"><span class="txt"><strong>银行账户</strong> <span class="badge">可选</span><span class="small">不是首次登陆必须办，有需要再开。</span></span></label>
       </div>
       <div class="okbox"><strong>这次不急着办：</strong>BC 驾照、MSP 医保。你们短登后还要回国生活，不需要为了第一次登陆一次性把所有生活手续办齐。</div>
-    </section>
-
-    <section id="english">
-      <div class="section-title"><h2>现场英语速查</h2><span class="hint">需要时直接点复制</span></div>
-      <div class="card">
-        <div class="say">This is our first PR landing. <button class="copy" data-copy="This is our first PR landing.">复制</button></div>
-        <div class="say">This is our Canadian mailing address for our PR cards. <button class="copy" data-copy="This is our Canadian mailing address for our PR cards.">复制</button></div>
-        <div class="say">Could you please confirm that our mailing address has been entered for the PR cards? <button class="copy" data-copy="Could you please confirm that our mailing address has been entered for the PR cards?">复制</button></div>
-        <div class="say">Where is the Service Canada SIN@Landing counter? <button class="copy" data-copy="Where is the Service Canada SIN@Landing counter?">复制</button></div>
-        <div class="say">Could I check the completed COPR before I leave? <button class="copy" data-copy="Could I check the completed COPR before I leave?">复制</button></div>
-      </div>
     </section>
 
     <section>
@@ -238,6 +230,12 @@
   const address=document.getElementById('address');
   address.value=localStorage.getItem('yvr-pr-address')||'';
   address.addEventListener('input',()=>localStorage.setItem('yvr-pr-address',address.value));
+
+  document.getElementById('openAddressMap').addEventListener('click',()=>{
+    const q=address.value.trim();
+    if(!q){ alert('请先输入 PR Card 收件地址。'); return; }
+    window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q),'_blank','noopener');
+  });
 
   document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
     try{
